@@ -28,18 +28,6 @@ def test_fun():
 				
 	im.saveFile()
 
-#
-# start your Lab 8 functions here:
-#
-
-
-def mult(c,n):
-	"""Multiplies c by n using only addition (adds c to result n times)"""
-	result = 0
-	for i in range(n):
-		result += c
-	return result
-
 
 def inMSet(c,n):
 	"""Takes a complex number, c, and a number if iterations, n, and checks to see if c
@@ -103,13 +91,11 @@ def mset():
 	
 	for col in range(width):
 		for row in range(height):
-			# here is where you will need
-			# to create the complex number, c!
-			# Use scale twice:
-			#   once to create the real part of c (x)
+			
+			#   scale to create the real part of c (x)
 			x = scale(col, width, XMIN, XMAX)
 			
-			#   once to create the imag. part of c (y)
+			#   scale to create the imag. part of c (y)
 			y = scale(row, height, YMIN, YMAX)
 
 			c = x + (y * 1j)
@@ -120,8 +106,10 @@ def mset():
 			else:
 				image.plotPoint(col,row, (83,55,71))
 
-	# we looped through every image pixel; we now write the file
+	# we looped through every image pixel; now write the file
 	image.saveFile()
 
 
+
+#This runs the main function -> you may want to remove this:
 mset()
