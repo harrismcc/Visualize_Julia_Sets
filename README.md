@@ -1,27 +1,18 @@
 # Mandelbrot_Set
 
-Overview of Files:
+## Overview:
+The Mandelbrot set is the set of complex numbers c for which the function ![eq](https://latex.codecogs.com/gif.latex?f_{c}(z)=z^{2}&plus;c) does not diverge when iterated from z=0.
 
-__pycache__	        
-pngs	              
-.DS_Store	          
-.gitattributes
+![image](https://raw.githubusercontent.com/harrismcc/Visualization_Mandelbrot_Set/master/test.png)
 
-README.md	          
-	The Read Me you are reading
-	
-cs5png3.py	        
+## Files and Usage:
+
+__cs5png3.py__	        
 	A Library to draw pixels on a png and save the image (Written by and property of Harvey Mudd College)
-	
-cs5png3.pyc	
-	Ignore this File
 
-hw8pr1.py	         
+__hw8pr1.py__	         
 	This is the file to run
 	
-test.png	          
+__test.png__	          
 	The default name of the generated image
 	
-test_provided.gif	
-
-test_provided.png
