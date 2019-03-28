@@ -74,20 +74,20 @@ def scale(pix, pixMax, floatMin, floatMax):
 def mset():
 	""" creates a 300x200 image of the Mandelbrot set
 	"""
-	width = 600
-	height = 400
+	width = 1200
+	height = 800
 	image = PNGImage(width, height)
 	NUMITER = 100  # of updates, from above
-	XMIN = -2.0   # the smallest real coordinate value
-	XMAX =  1.0   # the largest real coordinate value
-	YMIN = -1.0   # the smallest imag coordinate value
-	YMAX =  1.0   # the largest imag coordinate value
+	XMIN = -1.8   # the smallest real coordinate value
+	XMAX =  0.8   # the largest real coordinate value
+	YMIN = -0.8   # the smallest imag coordinate value
+	YMAX =  0.8   # the largest imag coordinate value
 	a = -0.79 + 0.15j 	  #Z value for use in Julia set -> x & y should be between -2 and 2
 
 	#c == z
 	#a == c
 
-	a = a - (10000 * 19)
+	a = a - 19/10000
 	for aCount in range(40):
 		a = a + aCount/10000
 
