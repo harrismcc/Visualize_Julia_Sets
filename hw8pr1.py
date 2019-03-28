@@ -6,27 +6,9 @@
 
 # keep this import line...
 from cs5png3 import *
+from math import log, log2
+import colorsys
 
-
-#
-# a test function...
-#
-def test_fun():
-	""" algorithmic image-creation one pixel at a time...
-		this is a test function: it should output
-		an image named test.png in the same directory
-	"""
-	im = PNGImage(300,200)  # creates an image of width=300, height = 200
-
-	# Nested loops!
-	for r in range(200):  # loops over the rows with runner-variable r
-		for c in range(300):  # loops over the cols with c
-			if  c == r:   
-				im.plotPoint( c, r, (255,0,0))
-			#else:
-			#	im.plotPoint( c, r, (255,0,0))
-				
-	im.saveFile()
 
 
 def inMSet(c,n):
@@ -40,6 +22,20 @@ def inMSet(c,n):
 		if abs(z) > 2: 
 			return False	
 	return True
+
+
+def jSet(z, c, max):
+	max = 100
+	n = 0
+	while abs(c) <= 2 and n < max:
+		c = c*c + z
+		n += 1
+	if n == max:
+		return max
+	return n + 1 - log(log2(abs(c)))
+
+def hsv2rgb(h,s,v):
+	return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
 				
 
 def weWantThisPixel(col, row):
@@ -78,36 +74,53 @@ def scale(pix, pixMax, floatMin, floatMax):
 def mset():
 	""" creates a 300x200 image of the Mandelbrot set
 	"""
-	width = 300
-	height = 200
+	width = 600
+	height = 400
 	image = PNGImage(width, height)
 	NUMITER = 100  # of updates, from above
 	XMIN = -2.0   # the smallest real coordinate value
 	XMAX =  1.0   # the largest real coordinate value
 	YMIN = -1.0   # the smallest imag coordinate value
 	YMAX =  1.0   # the largest imag coordinate value
+	a = -0.79 + 0.15j 	  #Z value for use in Julia set -> x & y should be between -2 and 2
 
-	# create a loop in order to draw some pixels
-	
-	for col in range(width):
-		for row in range(height):
-			
-			#   scale to create the real part of c (x)
-			x = scale(col, width, XMIN, XMAX)
-			
-			#   scale to create the imag. part of c (y)
-			y = scale(row, height, YMIN, YMAX)
+	#c == z
+	#a == c
 
-			c = x + (y * 1j)
-			# THEN, test if it's in the M. Set:
+	a = a - (10000 * 19)
+	for aCount in range(40):
+		a = a + aCount/10000
 
-			if inMSet(c, NUMITER):
-				image.plotPoint(col, row, (141,255,205))
-			else:
-				image.plotPoint(col,row, (83,55,71))
+		# create a loop in order to draw some pixels
+		for col in range(width):
+			for row in range(height):
+				
+				#   scale to create the real part of c (x)
+				x = scale(col, width, XMIN, XMAX)
+				
+				#   scale to create the imag. part of c (y)
+				y = scale(row, height, YMIN, YMAX)
 
-	# we looped through every image pixel; now write the file
-	image.saveFile()
+				c = x + (y * 1j)
+				# THEN, test if it's in the M. Set:
+
+				#get count before excape velocity > 2
+				color = jSet(a, c, NUMITER)
+				
+				#convert to HSV color value
+				hue = int(255 * color / NUMITER)
+				saturation = 100
+				value = 100 if color < NUMITER else 0
+				
+				#convert HSV to RGB
+				val = hsv2rgb(hue/100, saturation/100, value/100)
+
+				#Use info from above to draw pixel
+				image.plotPoint(col, row, val)
+				
+
+		# we looped through every image pixel; now write the file
+		image.saveFile(str(aCount) + ".png")
 
 
 
