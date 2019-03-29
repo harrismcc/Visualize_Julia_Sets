@@ -36,6 +36,19 @@ def jSet(z, c, max):
 
 def hsv2rgb(h,s,v):
 	return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
+
+def zoom(xMinMax, yMinMax, factor):
+	xMin, xMax = xMinMax
+	yMin, yMax = yMinMax
+	x, y = ((xMin + xMax)/2 ,(yMin + yMax) / 2)
+
+	print("Center: " + str((x,y)))
+	x = x - (0.1 * x)
+	y = y - (0.1 * y)
+
+
+	return xMin - (0.1 * x), xMax + (0.1 * x), yMin - (0.1 * y) ,yMax + (0.1 * y)
+
 				
 
 def weWantThisPixel(col, row):
@@ -74,13 +87,13 @@ def scale(pix, pixMax, floatMin, floatMax):
 def mset():
 	""" creates a 300x200 image of the Mandelbrot set
 	"""
-	width = 1200
-	height = 800
+	width = 720
+	height = 1480
 	image = PNGImage(width, height)
-	NUMITER = 100  # of updates, from above
-	XMIN = -1.1   # the smallest real coordinate value
-	XMAX =  1.0   # the largest real coordinate value
-	YMIN = -1.1  # the smallest imag coordinate value
+	NUMITER = 200  # of updates, from above
+	XMIN = -0.5   # the smallest real coordinate value
+	XMAX =  1.0  # the largest real coordinate value
+	YMIN = -0.5  # the smallest imag coordinate value
 	YMAX =  1.0   # the largest imag coordinate value
 	a = 0.28 + 0.008j 	  #Z value for use in Julia set -> x & y should be between -2 and 2
 
@@ -88,12 +101,13 @@ def mset():
 	#a == c
 
 	
-	for aCount in range(20):
-		a = a + aCount/100000
-		YMIN = YMIN + 0.1
-		YMAX = YMAX - 0.1
-		XMIN = XMIN + 0.1
-		XMAX = XMAX - 0.1
+	for aCount in range(1):
+		#a = a + aCount/100000
+		
+		#XMIN, XMAX, YMIN, YMAX = zoom((XMIN, XMAX), (YMIN, YMAX), 0.1)
+
+		print("Y: " + str((YMIN, YMAX)))
+		print ("X: " + str((XMIN, XMAX)))
 
 		# create a loop in order to draw some pixels
 		for col in range(width):
